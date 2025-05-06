@@ -35,7 +35,7 @@ function reportActivity() {
 reportActivity();
 
 // Demonstrate global variable access
-console.log("Global variable is accessible:", globalNinja === "Hyabusa");
+console.log("Global variable is accessible:", globalNinja === "Hyabusa");i
 
 // Try to access function-scoped variables (will be undefined)
 console.log(
