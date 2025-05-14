@@ -1,0 +1,87 @@
+<div id="container">
+    <form>
+        <input type="text" name="name" id="name" />
+    </form>
+    <p>Paragraph</p>
+    <span>Span</span>
+</div>
+<script>
+    /**
+     * DOM Traversal Example
+     * --------------------
+     * This example demonstrates a recursive DOM traversal function that:
+     * 1. Visits every element in the DOM tree
+     * 2. Executes a callback function on each element
+     * 3. Uses depth-first traversal (visits children before siblings)
+     * 
+     * The HTML structure being traversed:
+     * <div id="container">
+     *     <form>
+     *         <input type="text" name="name" id="name" />
+     *     </form>
+     *     <p>Paragraph</p>
+     *     <span>Span</span>
+     * </div>
+     * 
+     * The traversal order will be:
+     * 1. DIV (container)
+     * 2. FORM
+     * 3. INPUT
+     * 4. P
+     * 5. SPAN
+     * 
+     * @param {Element} element - The DOM element to start traversal from
+     * @param {Function} callback - Function to execute on each element
+     */
+    function traverseDom(element, callback) {
+        callback(element);
+        element = element.firstElementChild;
+        while (element) {
+            traverseDom(element, callback);
+            element = element.nextElementSibling;
+        }
+    }
+
+    const container = document.getElementById('container');
+    traverseDom(container, (element) => {
+        console.log("Visiting element:", element.nodeName);
+    });
+
+    /**
+     * Generator-based DOM Traversal Example
+     * ------------------------------------
+     * This example demonstrates the same DOM traversal using a generator:
+     * 1. Uses yield to return each element
+     * 2. Uses yield* for generator delegation to traverse children
+     * 3. Maintains the same depth-first traversal order
+     * 
+     * Advantages of this approach:
+     * - More elegant syntax using for...of loop
+     * - Can be paused and resumed
+     * - Can be combined with other generators
+     * - Memory efficient as it yields one element at a time
+     * 
+     * The traversal order remains the same:
+     * 1. DIV (container)
+     * 2. FORM
+     * 3. INPUT
+     * 4. P
+     * 5. SPAN
+     * 
+     * @param {Element} element - The DOM element to start traversal from
+     * @yields {Element} Each DOM element in the tree
+     */
+    function* DomTraversal(element) {
+        yield element;
+        element = element.firstElementChild;
+        while (element) {
+            yield* DomTraversal(element);
+            element = element.nextElementSibling;
+        }
+    }
+
+    const generator = DomTraversal(container);
+    for (const element of generator) {
+        console.log("Visiting element:", element.nodeName);
+    }
+</script>
