@@ -92,7 +92,7 @@ console.log(result);
  */
 function Folder() {
     return new Proxy({}, {
-        get: function(target, prop, receiver) {
+        get: function(target, prop, _receiver) {
             console.log(`Getting property ${prop}`);
             if (!(prop in target)) {
                 target[prop] = new Folder();
