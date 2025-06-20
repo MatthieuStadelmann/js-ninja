@@ -28,3 +28,39 @@ const ninjaCollection = {
 
 console.log(`Current number of ninjas in collection: ${ninjaCollection.ninjaCount}`);
 console.table(ninjaCollection.ninja);
+
+/**
+ * Creates a Ninja with a private skill level property
+ * @constructor
+ * @class
+ * @description A Ninja class that demonstrates property definition with controlled access
+ */
+function Ninja() {
+    /** @private */
+    let _skillLevel = 0;
+
+    Object.defineProperty(this, "skillLevel", {
+        /**
+         * Gets the current skill level of the ninja
+         * @returns {number} The current skill level
+         */
+        get: () => {
+            console.log("Getting skill level");
+            return _skillLevel;
+        },
+        /**
+         * Sets the skill level of the ninja
+         * @param {number} value - The new skill level to set
+         */
+        set: (value) => {
+            if (!Number.isInteger(value)) {
+                throw new Error("Skill level must be an integer");
+            }
+            _skillLevel = value;
+        },
+    });
+}
+
+const ninja = new Ninja();
+ninja.skillLevel = 10;
+console.log(ninja.skillLevel);
